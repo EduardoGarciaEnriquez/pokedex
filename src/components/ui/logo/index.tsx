@@ -1,9 +1,10 @@
 import pokeballDark from '@assets/pokeball-dark.svg'
 import pokeball from '@assets/pokeball.svg'
 import { useSelector } from 'react-redux'
+import { IRootState } from '../../../store/store'
 
 function Logo() {
-  const { isThemeDark } = useSelector((state) => state.theme)
+  const { isThemeDark } = useSelector((state: IRootState) => state.theme)
 
   return (
     <img
