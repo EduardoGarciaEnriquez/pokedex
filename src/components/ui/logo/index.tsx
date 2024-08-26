@@ -1,9 +1,9 @@
 import pokeballDark from '@assets/pokeball-dark.svg'
 import pokeball from '@assets/pokeball.svg'
-import { useToggleTheme } from '../../../hooks/useToggleTheme'
+import { useSelector } from 'react-redux'
 
 function Logo() {
-  const { theme } = useToggleTheme()
+  const { isThemeDark } = useSelector((state) => state.theme)
 
   return (
     <img
@@ -11,7 +11,7 @@ function Logo() {
         console.log('menu open')
       }}
       className="w-10 cursor-pointer"
-      src={theme === 'dark' ? pokeballDark : pokeball}
+      src={isThemeDark ? pokeballDark : pokeball}
       alt="pokeball logo"
     />
   )
