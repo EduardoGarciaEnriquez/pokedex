@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import {
   BlueBadge,
   GreenBadge,
@@ -10,7 +9,6 @@ import {
   YellowBadge,
 } from '../badges'
 import FavoriteButton from '../favorite-btn'
-import { IRootState } from '../../../store/store'
 
 export interface IProps {
   id?: string | number
@@ -36,11 +34,6 @@ export interface IProps {
 
 function Card({ pokemon }: { pokemon: IProps }) {
   const { name, sprites, types } = pokemon
-  const { loading } = useSelector((state: IRootState) => state.pokemon)
-
-  if (loading) {
-    return 'loading...'
-  }
 
   return (
     <div className="min-w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
@@ -74,7 +67,7 @@ function Card({ pokemon }: { pokemon: IProps }) {
               case 'poison':
                 return <PurpleBadge key={type.name}>{type.name}</PurpleBadge>
 
-              case 'gronund':
+              case 'ground':
                 return <GreenBadge key={type.name}>{type.name}</GreenBadge>
 
               case 'rock':

@@ -8,19 +8,21 @@ import {
 
 interface IState {
   pokemons: IProps[]
+  loadingPokemons: boolean
   page: number
   pokemonsList: []
+  loadingPokemonsList: boolean
   favorites: string
-  loading: boolean
   error: null | string
 }
 
 const initialState: IState = {
   pokemons: [],
+  loadingPokemons: false,
   page: 0,
   pokemonsList: [],
+  loadingPokemonsList: false,
   favorites: localStorage.getItem('favorites') ?? '[]',
-  loading: false,
   error: null,
 }
 
@@ -83,8 +85,10 @@ export const pokemonSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchPokemons.pending, (state) => {
+      state.loadingPokemons = true
+    })
     builder.addCase(fetchPokemons.fulfilled, (state, action) => {
-      state.loading = true
       const pokemons = action.payload
       const favorites = JSON.parse(localStorage.getItem('favorites') as string)
 
@@ -95,15 +99,24 @@ export const pokemonSlice = createSlice({
       })
 
       state.pokemons = pokemons
-      state.loading = false
+      state.loadingPokemons = false
     })
 
+    builder.addCase(fetchPokemonsList.pending, (state) => {
+      state.loadingPokemonsList = true
+    })
     builder.addCase(fetchPokemonsList.fulfilled, (state, action) => {
       state.pokemonsList = action.payload
+      state.loadingPokemonsList = false
+    })
+    builder.addCase(fetchPokemonsList.rejected, (state, action) => {
+      console.log(state, action)
     })
 
+    builder.addCase(fetchPokemonByName.pending, (state) => {
+      state.loadingPokemons = true
+    })
     builder.addCase(fetchPokemonByName.fulfilled, (state, action) => {
-      state.loading = true
       const pokemons = [action.payload]
       const favorites = JSON.parse(localStorage.getItem('favorites') as string)
 
@@ -114,7 +127,7 @@ export const pokemonSlice = createSlice({
       })
 
       state.pokemons = pokemons
-      state.loading = false
+      state.loadingPokemons = false
     })
   },
 })

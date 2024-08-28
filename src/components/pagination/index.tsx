@@ -5,7 +5,7 @@ import { setPage } from '../../store/slices/pokemonSlice'
 function Pagination() {
   const dispatch = useDispatch<AppDispatch>()
 
-  const { page, pokemonsList, pokemons } = useSelector(
+  const { page, pokemonsList, pokemons, loadingPokemonsList } = useSelector(
     (state: IRootState) => state.pokemon
   )
 
@@ -20,7 +20,7 @@ function Pagination() {
     if (page < totalPages) dispatch(setPage(page + 1))
   }
 
-  if (pokemons.length === 1) return null
+  if (pokemons.length === 1 || loadingPokemonsList) return null
 
   return (
     <div className="flex flex-col items-center">
