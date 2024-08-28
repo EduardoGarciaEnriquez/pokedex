@@ -1,39 +1,45 @@
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Header from './components/header'
 import Card, { IProps } from './components/ui/card'
-import { useGetPokemons } from './hooks/useGetPokemons'
-import { useSelector } from 'react-redux'
-import { IRootState } from './store/store'
+import { fetchPokemons } from './store/slices/pokemonSlice'
+import { AppDispatch, IRootState } from './store/store'
+import Pagination from './components/pagination'
 
 function App() {
-  const { data, loading, error, getPokemons } = useGetPokemons()
   const { isThemeDark } = useSelector((state: IRootState) => state.theme)
+  const { pokemons, loading, error } = useSelector(
+    (state: IRootState) => state.pokemon
+  )
+
+  const { page } = useSelector((state: IRootState) => state.pokemon)
+
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    getPokemons()
+    dispatch(fetchPokemons({ page }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
+
+  useEffect(() => {
     if (isThemeDark) {
       document.body.setAttribute('class', 'dark')
     } else {
       document.body.removeAttribute('class')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isThemeDark])
 
   return (
-    <div className="min-h-[100vh] dark:bg-slate-800 bg-slate-200">
+    <div className="min-h-[100vh] dark:bg-slate-800 bg-slate-200 pb-10">
       <Header />
-      <div className="py-24 w-full max-w-2xl mx-auto grid gap-4 grid-cols-1 md:grid-cols-2 justify-items-center px-4 md:px-0">
+      <div className="pt-24 pb-10 w-full max-w-2xl mx-auto grid gap-4 grid-cols-1 md:grid-cols-2 justify-items-center px-4 md:px-0">
         {!loading &&
           !error &&
-          data &&
-          data.map(({ name }: IProps) => {
-            return (
-              <div key={name}>
-                <Card name={name} />
-              </div>
-            )
+          pokemons?.map((pokemon: IProps) => {
+            return <Card pokemon={pokemon} key={pokemon.name} />
           })}
       </div>
+      <Pagination />
     </div>
   )
 }
