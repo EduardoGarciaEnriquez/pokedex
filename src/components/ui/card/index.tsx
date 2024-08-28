@@ -1,43 +1,129 @@
+import { useSelector } from 'react-redux'
+import {
+  BlueBadge,
+  GreenBadge,
+  GreyBadge,
+  IndigoBadge,
+  PinkBadge,
+  PurpleBadge,
+  RedBadge,
+  YellowBadge,
+} from '../badges'
+import FavoriteButton from '../favorite-btn'
+import { IRootState } from '../../../store/store'
+
 export interface IProps {
   id?: string | number
   name: string
+  sprites: {
+    back_default: string | null
+    back_female: string | null
+    back_shiny: string | null
+    back_shiny_female: string | null
+    front_default: string
+    front_female: string | null
+    front_shiny: string | null
+    front_shiny_female: string | null
+  }
+
+  types: [{ type: { name: string; url: string } }]
+  base_experience: number
+  height: number
+  weight: number
+  order: number
+  favorite?: boolean
 }
 
-function Card({ name }: IProps) {
+function Card({ pokemon }: { pokemon: IProps }) {
+  const { name, sprites, types } = pokemon
+  const { loading } = useSelector((state: IRootState) => state.pokemon)
+
+  if (loading) {
+    return 'loading...'
+  }
+
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-      <a href="#">
+    <div className="min-w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+      <div className="relative">
         <img
           className="w-full h-auto"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
-          alt=""
+          src={sprites.front_default}
+          alt={`${name} image`}
         />
-      </a>
+        <div className="absolute top-2 right-2">
+          <FavoriteButton pokemon={pokemon} />
+        </div>
+      </div>
+
       <div className="p-5">
-        <a href="#">
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {name}
-          </h5>
-        </a>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Here are the biggest enterprise technology acquisitions of 2021 so
-          far, in reverse chronological order.
-        </p>
-        <a
-          href="#"
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Read more
-          <svg
-            className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 10"
-          >
-            <path stroke="currentColor" d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </a>
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          {name}
+        </h5>
+        <div>
+          {types.map(({ type }) => {
+            switch (type.name) {
+              case 'normal':
+                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
+
+              case 'fighting':
+                return <RedBadge key={type.name}>{type.name}</RedBadge>
+
+              case 'flying':
+                return <YellowBadge key={type.name}>{type.name}</YellowBadge>
+
+              case 'poison':
+                return <PurpleBadge key={type.name}>{type.name}</PurpleBadge>
+
+              case 'gronund':
+                return <GreenBadge key={type.name}>{type.name}</GreenBadge>
+
+              case 'rock':
+                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
+
+              case 'bug':
+                return <GreenBadge key={type.name}>{type.name}</GreenBadge>
+
+              case 'ghost':
+                return <IndigoBadge key={type.name}>{type.name}</IndigoBadge>
+
+              case 'steel':
+                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
+
+              case 'fire':
+                return <RedBadge key={type.name}>{type.name}</RedBadge>
+
+              case 'water':
+                return <BlueBadge key={type.name}>{type.name}</BlueBadge>
+
+              case 'grass':
+                return <GreenBadge key={type.name}>{type.name}</GreenBadge>
+
+              case 'electric':
+                return <YellowBadge key={type.name}>{type.name}</YellowBadge>
+
+              case 'psychic':
+                return <IndigoBadge key={type.name}>{type.name}</IndigoBadge>
+
+              case 'ice':
+                return <BlueBadge key={type.name}>{type.name}</BlueBadge>
+
+              case 'dragon':
+                return <YellowBadge key={type.name}>{type.name}</YellowBadge>
+
+              case 'dark':
+                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
+
+              case 'fairy':
+                return <PinkBadge key={type.name}>{type.name}</PinkBadge>
+
+              case 'stellar':
+                return <BlueBadge key={type.name}>{type.name}</BlueBadge>
+
+              case 'unknown':
+                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
+            }
+          })}
+        </div>
       </div>
     </div>
   )
