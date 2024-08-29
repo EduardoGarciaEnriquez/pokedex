@@ -125,7 +125,7 @@ export const SuccessIcon = () => {
 
 export const WarningIcon = () => {
   return (
-    <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-yellow-400 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+    <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-yellow-400 bg-orange-100 rounded-lg dark:bg-orange-400 dark:text-orange-200">
       <svg
         className="w-5 h-5"
         aria-hidden="true"
