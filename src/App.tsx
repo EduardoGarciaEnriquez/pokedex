@@ -15,6 +15,7 @@ function App() {
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     dispatch(fetchPokemons({ page }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
