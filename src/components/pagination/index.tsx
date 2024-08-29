@@ -20,7 +20,7 @@ function Pagination() {
     if (page < totalPages) dispatch(setPage(page + 1))
   }
 
-  if (pokemons.length === 1 || loadingPokemonsList) return null
+  if (pokemons.length <= 1 || loadingPokemonsList) return null
 
   return (
     <div className="flex flex-col items-center">
