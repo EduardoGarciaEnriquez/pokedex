@@ -6,6 +6,12 @@ import {
   getPokemonsList,
 } from '../../utils/pokemonAPI'
 
+export enum Roles {
+  warning = 'warning',
+  error = 'error',
+  success = 'success',
+}
+
 interface IState {
   pokemons: IProps[]
   loadingPokemons: boolean
@@ -13,7 +19,9 @@ interface IState {
   pokemonsList: []
   loadingPokemonsList: boolean
   favorites: string
-  error: null | string
+  toastMsg: null | string
+  isToastVisible: boolean
+  toastRole: Roles | null
 }
 
 const initialState: IState = {
@@ -23,7 +31,9 @@ const initialState: IState = {
   pokemonsList: [],
   loadingPokemonsList: false,
   favorites: localStorage.getItem('favorites') ?? '[]',
-  error: null,
+  toastMsg: null,
+  isToastVisible: false,
+  toastRole: null,
 }
 
 export const fetchPokemonByName = createAsyncThunk(
@@ -66,10 +76,17 @@ export const pokemonSlice = createSlice({
 
       if (index === -1) {
         favorites.push(action.payload)
+
+        state.toastMsg = `Pokemon added to favorites`
+        state.toastRole = Roles.success
+        state.isToastVisible = true
       } else {
         favorites = favorites.filter(
           (item: { id: number }) => item.id !== action.payload.id
         )
+        state.toastMsg = `Pokemon removed from favorites`
+        state.toastRole = Roles.success
+        state.isToastVisible = true
       }
 
       localStorage.setItem('favorites', JSON.stringify(favorites))
@@ -82,6 +99,11 @@ export const pokemonSlice = createSlice({
     },
     setPage: (state, action) => {
       state.page = action.payload
+    },
+    closeToast: (state) => {
+      state.toastMsg = null
+      state.toastRole = null
+      state.isToastVisible = false
     },
   },
   extraReducers: (builder) => {
@@ -101,6 +123,14 @@ export const pokemonSlice = createSlice({
       state.pokemons = pokemons
       state.loadingPokemons = false
     })
+    builder.addCase(fetchPokemons.rejected, (state, action) => {
+      state.loadingPokemons = false
+
+      state.pokemons = []
+      state.toastMsg = `Error: ${action.error.message}`
+      state.toastRole = Roles.error
+      state.isToastVisible = true
+    })
 
     builder.addCase(fetchPokemonsList.pending, (state) => {
       state.loadingPokemonsList = true
@@ -110,7 +140,12 @@ export const pokemonSlice = createSlice({
       state.loadingPokemonsList = false
     })
     builder.addCase(fetchPokemonsList.rejected, (state, action) => {
-      console.log(state, action)
+      state.loadingPokemonsList = false
+
+      state.pokemonsList = []
+      state.toastMsg = `Error: ${action.error.message}`
+      state.toastRole = Roles.error
+      state.isToastVisible = true
     })
 
     builder.addCase(fetchPokemonByName.pending, (state) => {
@@ -129,8 +164,16 @@ export const pokemonSlice = createSlice({
       state.pokemons = pokemons
       state.loadingPokemons = false
     })
+    builder.addCase(fetchPokemonByName.rejected, (state, action) => {
+      state.loadingPokemons = false
+
+      state.pokemons = []
+      state.toastMsg = `Error: ${action.error.message}`
+      state.toastRole = Roles.error
+      state.isToastVisible = true
+    })
   },
 })
 
-export const { toggleFavorite, setPage } = pokemonSlice.actions
+export const { toggleFavorite, setPage, closeToast } = pokemonSlice.actions
 export default pokemonSlice.reducer
