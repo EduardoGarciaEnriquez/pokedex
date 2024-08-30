@@ -68,7 +68,7 @@ export const pokemonSlice = createSlice({
   initialState,
   reducers: {
     toggleFavorite: (state, action) => {
-      let favorites = JSON.parse(localStorage.getItem('favorites') as string)
+      let favorites = JSON.parse(state.favorites)
 
       const index = favorites.findIndex(
         (item: { id: number }) => item.id === action.payload.id
@@ -90,6 +90,7 @@ export const pokemonSlice = createSlice({
       }
 
       localStorage.setItem('favorites', JSON.stringify(favorites))
+      state.favorites = JSON.stringify(favorites)
 
       state.pokemons.forEach((pokemon) => {
         if (pokemon.id === action.payload.id) {
@@ -120,16 +121,7 @@ export const pokemonSlice = createSlice({
       state.loadingPokemons = true
     })
     builder.addCase(fetchPokemons.fulfilled, (state, action) => {
-      const pokemons = action.payload
-      const favorites = JSON.parse(localStorage.getItem('favorites') as string)
-
-      favorites.forEach((item: IProps) => {
-        pokemons.forEach((pokemon: IProps) => {
-          if (item.id === pokemon.id) pokemon.favorite = true
-        })
-      })
-
-      state.pokemons = pokemons
+      state.pokemons = action.payload
       state.loadingPokemons = false
     })
     builder.addCase(fetchPokemons.rejected, (state, action) => {
@@ -161,16 +153,7 @@ export const pokemonSlice = createSlice({
       state.loadingPokemons = true
     })
     builder.addCase(fetchPokemonByName.fulfilled, (state, action) => {
-      const pokemons = [action.payload]
-      const favorites = JSON.parse(localStorage.getItem('favorites') as string)
-
-      favorites.forEach((item: IProps) => {
-        pokemons.forEach((pokemon: IProps) => {
-          if (item.id === pokemon.id) pokemon.favorite = true
-        })
-      })
-
-      state.pokemons = pokemons
+      state.pokemons = [action.payload]
       state.loadingPokemons = false
     })
     builder.addCase(fetchPokemonByName.rejected, (state, action) => {
