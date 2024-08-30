@@ -1,25 +1,20 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Cards from './components/cards'
-import Header from './components/header'
-import Pagination from './components/pagination'
-import { fetchPokemons } from './store/slices/pokemonSlice'
-import { AppDispatch, IRootState } from './store/store'
-import Toast from './components/toast'
+import { useSelector } from 'react-redux'
+import {
+  Outlet,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from 'react-router-dom'
 import Drawer from './components/drawer'
+import Header from './components/header'
+import Toast from './components/toast'
+import Favorites from './pages/favorites'
+import Home from './pages/home'
+import { IRootState } from './store/store'
 
 function App() {
   const { isThemeDark } = useSelector((state: IRootState) => state.theme)
-
-  const { page } = useSelector((state: IRootState) => state.pokemon)
-
-  const dispatch = useDispatch<AppDispatch>()
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    dispatch(fetchPokemons({ page }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
 
   useEffect(() => {
     if (isThemeDark) {
@@ -30,12 +25,24 @@ function App() {
   }, [isThemeDark])
 
   return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
+}
+
+const Layout = () => {
+  return (
     <div className="min-h-[100vh] dark:bg-slate-800 bg-slate-200 pb-10 transition-all duration-1000 ease-in-out">
       <Header />
       <Toast />
       <Drawer />
-      <Cards />
-      <Pagination />
+      <Outlet />
     </div>
   )
 }
