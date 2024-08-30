@@ -11,7 +11,7 @@ function Logo() {
       onClick={() => {
         console.log('menu open')
       }}
-      className="w-10 cursor-pointer"
+      className="w-10 cursor-pointe drop-shadow-md"
       src={isThemeDark ? pokeballDark : pokeball}
       alt="pokeball logo"
     />

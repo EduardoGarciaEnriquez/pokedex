@@ -36,7 +36,7 @@ function Card({ pokemon }: { pokemon: IProps }) {
   const { name, sprites, types } = pokemon
 
   return (
-    <div className="min-w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+    <div className="min-w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transition-all duration-1000 ease-in-out">
       <div className="relative">
         <img
           className="w-full h-auto"

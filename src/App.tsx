@@ -29,7 +29,7 @@ function App() {
   }, [isThemeDark])
 
   return (
-    <div className="min-h-[100vh] dark:bg-slate-800 bg-slate-200 pb-10">
+    <div className="min-h-[100vh] dark:bg-slate-800 bg-slate-200 pb-10 transition-all duration-1000 ease-in-out">
       <Header />
       <Toast />
       <Cards />

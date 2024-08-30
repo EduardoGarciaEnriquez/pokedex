@@ -72,7 +72,7 @@ export const FavoriteIcon = ({ status }: { status: boolean | undefined }) => {
     </svg>
   ) : (
     <svg
-      className="w-6 h-6 text-gray-200 dark:text-gray-600"
+      className="w-6 h-6 text-gray-200 dark:text-gray-600 transition-all duration-1000 ease-in-out"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
