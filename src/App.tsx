@@ -6,6 +6,7 @@ import Pagination from './components/pagination'
 import { fetchPokemons } from './store/slices/pokemonSlice'
 import { AppDispatch, IRootState } from './store/store'
 import Toast from './components/toast'
+import Drawer from './components/drawer'
 
 function App() {
   const { isThemeDark } = useSelector((state: IRootState) => state.theme)
@@ -32,6 +33,7 @@ function App() {
     <div className="min-h-[100vh] dark:bg-slate-800 bg-slate-200 pb-10 transition-all duration-1000 ease-in-out">
       <Header />
       <Toast />
+      <Drawer />
       <Cards />
       <Pagination />
     </div>
