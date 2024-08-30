@@ -1,7 +1,7 @@
 import moonIcon from '@assets/moon.svg'
 import sunIcon from '@assets/sun.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleTheme } from '../../../store/slices/themeSlice'
+import { toggleTheme } from '../../../store/slices/uiSlice'
 import { IRootState } from '../../../store/store'
 
 const ThemeSwitch = () => {
@@ -9,7 +9,7 @@ const ThemeSwitch = () => {
   const dispatch = useDispatch()
 
   const handleOnClick = () => {
-    dispatch(toggleTheme(!isThemeDark))
+    dispatch(toggleTheme())
   }
 
   return (

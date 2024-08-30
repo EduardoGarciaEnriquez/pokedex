@@ -105,6 +105,15 @@ export const pokemonSlice = createSlice({
       state.toastRole = null
       state.isToastVisible = false
     },
+    setFavorites: (state) => {
+      const favorites = JSON.parse(localStorage.getItem('favorites') as string)
+
+      favorites.forEach((item: IProps) => {
+        item.favorite = true
+      })
+
+      state.pokemons = favorites
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPokemons.pending, (state) => {
@@ -175,5 +184,6 @@ export const pokemonSlice = createSlice({
   },
 })
 
-export const { toggleFavorite, setPage, closeToast } = pokemonSlice.actions
+export const { toggleFavorite, setPage, closeToast, setFavorites } =
+  pokemonSlice.actions
 export default pokemonSlice.reducer

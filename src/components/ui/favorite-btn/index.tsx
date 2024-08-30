@@ -1,6 +1,8 @@
 import { useDispatch } from 'react-redux'
+import {
+  toggleFavorite
+} from '../../../store/slices/pokemonSlice'
 import { IProps } from '../card'
-import { toggleFavorite } from '../../../store/slices/pokemonSlice'
 import { FavoriteIcon } from '../icons'
 
 function FavoriteButton({ pokemon }: { pokemon: IProps }) {
