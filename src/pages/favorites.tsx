@@ -1,6 +1,17 @@
+import { useEffect } from 'react'
 import Cards from '../components/cards'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store/store'
+import { setFavorites } from '../store/slices/pokemonSlice'
 
 function Favorites() {
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(setFavorites())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return <Cards />
 }
 

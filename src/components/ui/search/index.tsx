@@ -8,6 +8,7 @@ import {
 } from '../../../store/slices/pokemonSlice'
 import { AppDispatch, IRootState } from '../../../store/store'
 import { HomeIcon, LoadingIcon, SearchIcon } from '../icons'
+import { Link } from 'react-router-dom'
 
 function Search() {
   const [value, setValue] = useState<string>('')
@@ -58,21 +59,23 @@ function Search() {
             )
           })}
         </select>
-        <button
-          type="submit"
-          className="p-2.5 text-sm font-medium h-auto text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          onClick={handleSubmit}
-        >
-          {value === '' ? (
-            loadingPokemonsList ? (
-              <LoadingIcon />
-            ) : (
-              <HomeIcon />
-            )
-          ) : (
-            <SearchIcon />
-          )}
-        </button>
+        {value === '' ? (
+          <Link
+            to="/"
+            className="p-2.5 text-sm font-medium h-auto text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            // onClick={handleSubmit}
+          >
+            {loadingPokemonsList ? <LoadingIcon /> : <HomeIcon />}
+          </Link>
+        ) : (
+          <button
+            type="submit"
+            className="p-2.5 text-sm font-medium h-auto text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={handleSubmit}
+          >
+            {loadingPokemonsList ? <LoadingIcon /> : <SearchIcon />}
+          </button>
+        )}
       </div>
     </form>
   )
