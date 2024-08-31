@@ -62,7 +62,7 @@ export const SearchIcon = () => {
 export const FavoriteIcon = ({ status }: { status: boolean | undefined }) => {
   return status ? (
     <svg
-      className="w-6 h-6 text-yellow-300"
+      className="w-6 h-6 text-yellow-300 transition-all duration-500 ease-in-out"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
