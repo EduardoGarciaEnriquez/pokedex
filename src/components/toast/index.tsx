@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeToast, Roles } from '../../store/slices/pokemonSlice'
 import { AppDispatch, IRootState } from '../../store/store'
@@ -26,19 +26,33 @@ function Toast() {
   }
 
   const onClose = () => {
+    hide()
+  }
+
+  const hide = () => {
     setDismiss(true)
     setTimeout(() => {
       dispatch(closeToast())
       setDismiss(false)
-    }, 1000)
+    }, 500)
   }
+
+  //self close after 3s
+  useEffect(() => {
+    if (isToastVisible) {
+      setTimeout(() => {
+        hide()
+      }, 3000)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isToastVisible])
 
   if (!isToastVisible) return <></>
 
   return (
     <div
-      className={`fixed top-20 z-10 w-full flex justify-center duration-1000 ease-in-out transition-all ${
-        dismiss && ' opacity-0'
+      className={`fixed top-20 z-10 w-full flex justify-center duration-1000 ease-in-out transition-opacity ${
+        dismiss && 'opacity-0'
       }`}
     >
       <div
