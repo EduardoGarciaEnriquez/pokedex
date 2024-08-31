@@ -28,10 +28,12 @@ function Search() {
     if (value !== '') {
       dispatch(fetchPokemonByName(value))
       setValue('')
-    } else {
-      dispatch(setPage(0))
-      dispatch(fetchPokemons({}))
     }
+  }
+
+  const goHome = () => {
+    dispatch(setPage(0))
+    dispatch(fetchPokemons({}))
   }
 
   const handleOnChange = (e: { target: { value: string } }) => {
@@ -63,7 +65,7 @@ function Search() {
           <Link
             to="/"
             className="p-2.5 text-sm font-medium h-auto text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            // onClick={handleSubmit}
+            onClick={goHome}
           >
             {loadingPokemonsList ? <LoadingIcon /> : <HomeIcon />}
           </Link>
