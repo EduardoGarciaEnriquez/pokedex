@@ -19,8 +19,8 @@ function Drawer() {
   return (
     <div
       id="drawer-navigation"
-      className={`fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto bg-white w-full max-w-md dark:bg-gray-800 ${
-        !isDrawerVisible && 'transition-transform -translate-x-full'
+      className={`fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto bg-white w-full max-w-md dark:bg-gray-800 transition-transform duration-500 ${
+        !isDrawerVisible && '-translate-x-full'
       }`}
       aria-labelledby="drawer-navigation-label"
     >
