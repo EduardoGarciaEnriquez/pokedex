@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import {
   BlueBadge,
+  CyanBadge,
   GreenBadge,
   GreyBadge,
   IndigoBadge,
@@ -9,6 +11,29 @@ import {
   YellowBadge,
 } from '../badges'
 import FavoriteButton from '../favorite-btn'
+
+enum Types {
+  normal = 'normal',
+  fighting = 'fighting',
+  flying = 'flying',
+  poison = 'poison',
+  ground = 'ground',
+  rock = 'rock',
+  bug = 'bug',
+  ghost = 'ghost',
+  steel = 'steel',
+  fire = 'fire',
+  water = 'water',
+  grass = 'grass',
+  electric = 'electric',
+  psychic = 'psychic',
+  ice = 'ice',
+  dragon = 'dragon',
+  dark = 'dark',
+  fairy = 'fairy',
+  stellar = 'stellar',
+  unknown = 'unknown',
+}
 
 export interface IProps {
   id?: string | number
@@ -54,67 +79,34 @@ function Card({ pokemon }: { pokemon: IProps }) {
         </h5>
         <div>
           {types.map(({ type }) => {
-            switch (type.name) {
-              case 'normal':
-                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
-
-              case 'fighting':
-                return <RedBadge key={type.name}>{type.name}</RedBadge>
-
-              case 'flying':
-                return <YellowBadge key={type.name}>{type.name}</YellowBadge>
-
-              case 'poison':
-                return <PurpleBadge key={type.name}>{type.name}</PurpleBadge>
-
-              case 'ground':
-                return <GreenBadge key={type.name}>{type.name}</GreenBadge>
-
-              case 'rock':
-                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
-
-              case 'bug':
-                return <GreenBadge key={type.name}>{type.name}</GreenBadge>
-
-              case 'ghost':
-                return <IndigoBadge key={type.name}>{type.name}</IndigoBadge>
-
-              case 'steel':
-                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
-
-              case 'fire':
-                return <RedBadge key={type.name}>{type.name}</RedBadge>
-
-              case 'water':
-                return <BlueBadge key={type.name}>{type.name}</BlueBadge>
-
-              case 'grass':
-                return <GreenBadge key={type.name}>{type.name}</GreenBadge>
-
-              case 'electric':
-                return <YellowBadge key={type.name}>{type.name}</YellowBadge>
-
-              case 'psychic':
-                return <IndigoBadge key={type.name}>{type.name}</IndigoBadge>
-
-              case 'ice':
-                return <BlueBadge key={type.name}>{type.name}</BlueBadge>
-
-              case 'dragon':
-                return <YellowBadge key={type.name}>{type.name}</YellowBadge>
-
-              case 'dark':
-                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
-
-              case 'fairy':
-                return <PinkBadge key={type.name}>{type.name}</PinkBadge>
-
-              case 'stellar':
-                return <BlueBadge key={type.name}>{type.name}</BlueBadge>
-
-              case 'unknown':
-                return <GreyBadge key={type.name}>{type.name}</GreyBadge>
-            }
+            const { name } = type
+            return (
+              <Link to={`/type/${name}`} key={name}>
+                {name === Types.grass ||
+                name === Types.ground ||
+                name === Types.bug ? (
+                  <GreenBadge>{name}</GreenBadge>
+                ) : name === Types.fighting || name === Types.fire ? (
+                  <RedBadge>{name}</RedBadge>
+                ) : name === Types.flying ||
+                  name === Types.electric ||
+                  name === Types.dragon ? (
+                  <YellowBadge>{name}</YellowBadge>
+                ) : name === Types.poison ? (
+                  <PurpleBadge>{name}</PurpleBadge>
+                ) : name === Types.water || name === Types.stellar ? (
+                  <BlueBadge>{name}</BlueBadge>
+                ) : name === Types.psychic || name === Types.ghost ? (
+                  <IndigoBadge>{name}</IndigoBadge>
+                ) : name === Types.fairy ? (
+                  <PinkBadge>{name}</PinkBadge>
+                ) : name === Types.ice ? (
+                  <CyanBadge>{name}</CyanBadge>
+                ) : (
+                  <GreyBadge>{name}</GreyBadge>
+                )}
+              </Link>
+            )
           })}
         </div>
       </div>
