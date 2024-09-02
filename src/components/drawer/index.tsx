@@ -1,18 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { toggleDrawer } from '../../store/slices/uiSlice'
 import { AppDispatch, IRootState } from '../../store/store'
-import { CloseIcon, FavoriteIcon } from '../ui/icons'
+import { CloseIcon } from '../ui/icons'
+import Menu from './menu'
 
 function Drawer() {
   const { isDrawerVisible } = useSelector((state: IRootState) => state.theme)
   const dispatch = useDispatch<AppDispatch>()
 
   const handleOnClick = () => {
-    dispatch(toggleDrawer())
-  }
-
-  const handleClickFavorites = () => {
     dispatch(toggleDrawer())
   }
 
@@ -40,18 +36,7 @@ function Drawer() {
         <CloseIcon />
       </button>
       <div className="py-4 overflow-y-auto">
-        <ul className="space-y-2 font-medium">
-          <li>
-            <Link
-              to="/favorites"
-              onClick={handleClickFavorites}
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group w-full"
-            >
-              <FavoriteIcon status={true} />
-              <span className="ms-3">Favorite Pokemons</span>
-            </Link>
-          </li>
-        </ul>
+        <Menu />
       </div>
     </div>
   )
