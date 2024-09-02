@@ -7,6 +7,14 @@ function Cards() {
   const { pokemons, loadingPokemons } = useSelector(
     (state: IRootState) => state.pokemon
   )
+
+  if (pokemons.length === 0 && !loadingPokemons)
+    return (
+      <div className="text-white text-lg pt-24 text-center">
+        There were no results. Try with a different input.
+      </div>
+    )
+
   return (
     <div className="pt-24 pb-10 w-full max-w-2xl mx-auto grid gap-4 grid-cols-1 md:grid-cols-2 justify-items-center px-4 md:px-0">
       {loadingPokemons ? (
