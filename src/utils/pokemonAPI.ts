@@ -22,7 +22,7 @@ export const getPokemonsList = async () => {
     })
 }
 
-export const getPokemonDetails = async (name: string) => {
+export const getPokemonByName = async (name: string) => {
   return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     .then((response) => response.json())
     .then((response) => {

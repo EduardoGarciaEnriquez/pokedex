@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IProps } from '../../components/ui/card'
 import {
-  getPokemonDetails,
+  getPokemonByName,
   getPokemonsByPage,
   getPokemonsByType,
   getPokemonsList,
@@ -47,7 +47,7 @@ const initialState: IState = {
 export const fetchPokemonByName = createAsyncThunk(
   'pokemon/fetchByName',
   async (name: string) => {
-    const pokemonDetail = await getPokemonDetails(name)
+    const pokemonDetail = await getPokemonByName(name)
     return pokemonDetail
   }
 )
@@ -58,7 +58,7 @@ export const fetchPokemons = createAsyncThunk(
     const pokemonsRes = await getPokemonsByPage({ page })
     const pokemonsDetailed = await Promise.all(
       pokemonsRes.results.map(({ name }: { name: string }) =>
-        getPokemonDetails(name)
+        getPokemonByName(name)
       )
     )
 
@@ -72,7 +72,7 @@ export const fetchPokemonsByType = createAsyncThunk(
     const pokemonsRes = await getPokemonsByType(type)
     const pokemonsDetailed = await Promise.all(
       pokemonsRes.map(({ pokemon }: { pokemon: { name: string } }) =>
-        getPokemonDetails(pokemon.name)
+        getPokemonByName(pokemon.name)
       )
     )
 
