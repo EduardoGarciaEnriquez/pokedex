@@ -40,3 +40,16 @@ export const getPokemonDetails = async (name: string) => {
       console.log(error)
     })
 }
+
+export const getPokemonTypes = async () => {
+  return await fetch(
+    `https://pokeapi.co/api/v2/type`
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      return response.results
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}

@@ -4,6 +4,7 @@ import {
   getPokemonDetails,
   getPokemonsByPage,
   getPokemonsList,
+  getPokemonTypes,
 } from '../../utils/pokemonAPI'
 
 export enum Roles {
@@ -18,6 +19,8 @@ interface IState {
   page: number
   pokemonsList: []
   loadingPokemonsList: boolean
+  pokemonTypes: []
+  loadingPokemonTypes: boolean
   favorites: string
   toastMsg: null | string
   isToastVisible: boolean
@@ -30,6 +33,8 @@ const initialState: IState = {
   page: 0,
   pokemonsList: [],
   loadingPokemonsList: false,
+  pokemonTypes: [],
+  loadingPokemonTypes: false,
   favorites: localStorage.getItem('favorites') ?? '[]',
   toastMsg: null,
   isToastVisible: false,
@@ -60,6 +65,13 @@ export const fetchPokemonsList = createAsyncThunk(
   'pokemon/fetchPokemonsList',
   async () => {
     return await getPokemonsList()
+  }
+)
+
+export const fetchPokemonTypes = createAsyncThunk(
+  'pokemon/fetchPokemonTypes',
+  async () => {
+    return await getPokemonTypes()
   }
 )
 
@@ -160,6 +172,22 @@ export const pokemonSlice = createSlice({
       state.loadingPokemons = false
 
       state.pokemons = []
+      state.toastMsg = `Error: ${action.error.message}`
+      state.toastRole = Roles.error
+      state.isToastVisible = true
+    })
+
+    builder.addCase(fetchPokemonTypes.pending, (state) => {
+      state.loadingPokemonTypes = true
+    })
+    builder.addCase(fetchPokemonTypes.fulfilled, (state, action) => {
+      state.pokemonTypes = action.payload
+      state.loadingPokemonTypes = false
+    })
+    builder.addCase(fetchPokemonTypes.rejected, (state, action) => {
+      state.loadingPokemonTypes = false
+
+      state.pokemonTypes = []
       state.toastMsg = `Error: ${action.error.message}`
       state.toastRole = Roles.error
       state.isToastVisible = true
