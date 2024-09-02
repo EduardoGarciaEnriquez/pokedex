@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { IProps } from '../../components/ui/card'
 import {
   getPokemonByName,
+  getPokemonDetails,
   getPokemonsByPage,
   getPokemonsByType,
   getPokemonsList,
@@ -14,9 +14,65 @@ export enum Roles {
   success = 'success',
 }
 
+export enum PokemonTypes {
+  normal = 'normal',
+  fighting = 'fighting',
+  flying = 'flying',
+  poison = 'poison',
+  ground = 'ground',
+  rock = 'rock',
+  bug = 'bug',
+  ghost = 'ghost',
+  steel = 'steel',
+  fire = 'fire',
+  water = 'water',
+  grass = 'grass',
+  electric = 'electric',
+  psychic = 'psychic',
+  ice = 'ice',
+  dragon = 'dragon',
+  dark = 'dark',
+  fairy = 'fairy',
+  stellar = 'stellar',
+  unknown = 'unknown',
+}
+
+export interface IPropsPokemon {
+  id?: string | number
+  name: string
+  sprites: {
+    back_default: string | null
+    back_female: string | null
+    back_shiny: string | null
+    back_shiny_female: string | null
+    front_default: string
+    front_female: string | null
+    front_shiny: string | null
+    front_shiny_female: string | null
+  }
+
+  types: { type: { name: string; url: string } }[]
+  base_experience: number
+  height: number
+  weight: number
+  order: number
+  favorite?: boolean
+  abilities: { ability: { name: string } }[]
+  stats: { base_stat: number; stat: { name: string } }[]
+}
+
+export interface IPropsDetails extends IPropsPokemon {
+  color: { name: string }
+  evolution_chain: { url: string }
+  flavor_text_entries: { flavor_text: string }[]
+  growth_rate: { name: string }
+  habitat: { name: string }
+  shape: { name: string }
+}
+
 interface IState {
   total: number
-  pokemons: IProps[]
+  pokemons: IPropsPokemon[]
   loadingPokemons: boolean
   page: number
   pokemonsList: []
@@ -140,7 +196,7 @@ export const pokemonSlice = createSlice({
     setFavorites: (state) => {
       const favorites = JSON.parse(localStorage.getItem('favorites') as string)
 
-      favorites.forEach((item: IProps) => {
+      favorites.forEach((item: IPropsPokemon) => {
         item.favorite = true
       })
 

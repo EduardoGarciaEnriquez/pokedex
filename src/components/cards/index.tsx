@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux'
 import { IRootState } from '../../store/store'
-import Card, { IProps } from '../ui/card'
+import Card from '../ui/card'
 import CardSkeleton from '../ui/card/loading'
+import { IPropsPokemon } from '../../store/slices/pokemonSlice'
 
 function Cards() {
   const { pokemons, loadingPokemons } = useSelector(
@@ -25,7 +26,7 @@ function Cards() {
           <CardSkeleton />
         </>
       ) : (
-        pokemons?.map((pokemon: IProps) => {
+        pokemons?.map((pokemon: IPropsPokemon) => {
           return <Card pokemon={pokemon} key={pokemon.name} />
         })
       )}
