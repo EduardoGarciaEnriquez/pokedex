@@ -14,6 +14,7 @@ export enum Roles {
 }
 
 interface IState {
+  total: number
   pokemons: IProps[]
   loadingPokemons: boolean
   page: number
@@ -28,6 +29,7 @@ interface IState {
 }
 
 const initialState: IState = {
+  total: 0,
   pokemons: [],
   loadingPokemons: false,
   page: 0,
@@ -54,10 +56,12 @@ export const fetchPokemons = createAsyncThunk(
   async ({ page = 0 }: { page?: number }) => {
     const pokemonsRes = await getPokemonsByPage({ page })
     const pokemonsDetailed = await Promise.all(
-      pokemonsRes.map(({ name }: { name: string }) => getPokemonDetails(name))
+      pokemonsRes.results.map(({ name }: { name: string }) =>
+        getPokemonDetails(name)
+      )
     )
 
-    return pokemonsDetailed
+    return { pokemonsDetailed, total: pokemonsRes.count }
   }
 )
 
@@ -133,7 +137,8 @@ export const pokemonSlice = createSlice({
       state.loadingPokemons = true
     })
     builder.addCase(fetchPokemons.fulfilled, (state, action) => {
-      state.pokemons = action.payload
+      state.pokemons = action.payload.pokemonsDetailed
+      state.total = action.payload.total
       state.loadingPokemons = false
     })
     builder.addCase(fetchPokemons.rejected, (state, action) => {

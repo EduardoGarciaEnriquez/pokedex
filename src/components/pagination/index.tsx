@@ -5,12 +5,12 @@ import { setPage } from '../../store/slices/pokemonSlice'
 function Pagination() {
   const dispatch = useDispatch<AppDispatch>()
 
-  const { page, pokemonsList, pokemons, loadingPokemonsList } = useSelector(
+  const { page, pokemons, loadingPokemons, total } = useSelector(
     (state: IRootState) => state.pokemon
   )
 
   const currentPage = page + 1
-  const totalPages = pokemonsList.length / 10
+  const totalPages = total / 10
 
   const handlePrev = () => {
     if (page > 0) dispatch(setPage(page - 1))
@@ -20,7 +20,7 @@ function Pagination() {
     if (page < totalPages) dispatch(setPage(page + 1))
   }
 
-  if (pokemons.length <= 1 || loadingPokemonsList) return null
+  if (pokemons.length <= 1 || loadingPokemons) return null
 
   return (
     <div className="flex flex-col items-center">
@@ -35,7 +35,7 @@ function Pagination() {
         </span>{' '}
         of{' '}
         <span className="font-semibold text-gray-900 dark:text-white">
-          {pokemonsList.length}
+          {total}
         </span>{' '}
         Entries
       </span>

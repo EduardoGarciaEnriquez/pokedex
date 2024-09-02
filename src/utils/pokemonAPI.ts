@@ -4,7 +4,7 @@ export const getPokemonsByPage = async ({ page = 0 }: { page?: number }) => {
   )
     .then((response) => response.json())
     .then((response) => {
-      return response.results
+      return response
     })
     .catch((error) => {
       console.error(error)
