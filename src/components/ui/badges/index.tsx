@@ -6,6 +6,12 @@ export const BlueBadge = ({ children }: { children: ReactNode }) => (
   </span>
 )
 
+export const CyanBadge = ({ children }: { children: ReactNode }) => (
+  <span className="bg-cyan-100 text-cyan-800 text-sm transition-all duration-1000 ease-in-out font-medium me-2 px-2.5 py-0.5 rounded dark:bg-cyan-500 dark:text-cyan-100">
+    {children}
+  </span>
+)
+
 export const GreyBadge = ({ children }: { children: ReactNode }) => (
   <span className="bg-gray-100 text-gray-800 text-sm transition-all duration-1000 ease-in-out font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
     {children}
