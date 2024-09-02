@@ -3,6 +3,7 @@ import { IProps } from '../../components/ui/card'
 import {
   getPokemonDetails,
   getPokemonsByPage,
+  getPokemonsByType,
   getPokemonsList,
   getPokemonTypes,
 } from '../../utils/pokemonAPI'
@@ -62,6 +63,20 @@ export const fetchPokemons = createAsyncThunk(
     )
 
     return { pokemonsDetailed, total: pokemonsRes.count }
+  }
+)
+
+export const fetchPokemonsByType = createAsyncThunk(
+  'pokemon/fetchPokemonsByType',
+  async (type: string) => {
+    const pokemonsRes = await getPokemonsByType(type)
+    const pokemonsDetailed = await Promise.all(
+      pokemonsRes.map(({ pokemon }: { pokemon: { name: string } }) =>
+        getPokemonDetails(pokemon.name)
+      )
+    )
+
+    return pokemonsDetailed
   }
 )
 
@@ -193,6 +208,22 @@ export const pokemonSlice = createSlice({
       state.loadingPokemonTypes = false
 
       state.pokemonTypes = []
+      state.toastMsg = `Error: ${action.error.message}`
+      state.toastRole = Roles.error
+      state.isToastVisible = true
+    })
+
+    builder.addCase(fetchPokemonsByType.pending, (state) => {
+      state.loadingPokemons = true
+    })
+    builder.addCase(fetchPokemonsByType.fulfilled, (state, action) => {
+      state.pokemons = action.payload
+      state.loadingPokemons = false
+    })
+    builder.addCase(fetchPokemonsByType.rejected, (state, action) => {
+      state.loadingPokemons = false
+
+      state.pokemons = []
       state.toastMsg = `Error: ${action.error.message}`
       state.toastRole = Roles.error
       state.isToastVisible = true

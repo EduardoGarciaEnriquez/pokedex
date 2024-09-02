@@ -42,12 +42,21 @@ export const getPokemonDetails = async (name: string) => {
 }
 
 export const getPokemonTypes = async () => {
-  return await fetch(
-    `https://pokeapi.co/api/v2/type`
-  )
+  return await fetch(`https://pokeapi.co/api/v2/type`)
     .then((response) => response.json())
     .then((response) => {
       return response.results
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+
+export const getPokemonsByType = async (type: string) => {
+  return await fetch(`https://pokeapi.co/api/v2/type/${type}`)
+    .then((response) => response.json())
+    .then((response) => {
+      return response.pokemon
     })
     .catch((error) => {
       console.error(error)
