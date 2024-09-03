@@ -124,7 +124,7 @@ export const fetchPokemonDetails = createAsyncThunk(
   async (name: string) => {
     const evolutionArray: string[] = []
     const response = await getPokemonByName(name)
-    const details = await getPokemonDetails(name)
+    const details = await getPokemonDetails(response.species.name)
     const evolutions: IPropsEvolutionChain = await getEvolutionChain(
       details.evolution_chain.url
     )

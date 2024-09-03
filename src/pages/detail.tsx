@@ -16,6 +16,7 @@ import CardSkeleton from '../components/ui/card/loading'
 import FavoriteButton from '../components/ui/favorite-btn'
 import { fetchPokemonDetails, PokemonTypes } from '../store/slices/pokemonSlice'
 import { AppDispatch, IRootState } from '../store/store'
+import pokeball from '../assets/pokeball.svg'
 
 function Detail() {
   const dispatch = useDispatch<AppDispatch>()
@@ -38,8 +39,8 @@ function Detail() {
         <div className=" bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 grid gap-4 grid-cols-1 md:grid-cols-2 justify-items-center">
           <div className="relative w-full flex flex-col justify-center items-center">
             <img
-              className="w-full h-auto"
-              src={pokemon.sprites.front_default}
+              className={pokemon.sprites?.front_default ? 'w-full h-auto' : 'p-28 h-96 md:p-0 md:h-auto'}
+              src={pokemon.sprites?.front_default ?? pokeball}
               alt={`${name} image`}
             />
             <div className="absolute top-2 right-2">
@@ -89,7 +90,7 @@ function Detail() {
               Bio
             </h5>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {pokemon.flavor_text_entries[4].flavor_text.replace(
+              {pokemon.flavor_text_entries[0].flavor_text.replace(
                 'POKéMON',
                 'pokemon'
               )}
@@ -99,7 +100,7 @@ function Detail() {
               Habitat
             </h5>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {pokemon.habitat.name}
+              {pokemon.habitat?.name ?? 'No data'}
             </p>
 
             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -115,7 +116,7 @@ function Detail() {
               Shape
             </h5>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {pokemon.shape.name}
+              {pokemon?.shape?.name ?? 'No data'}
             </p>
 
             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
