@@ -26,14 +26,6 @@ export const getPokemonByName = async (name: string) => {
   return await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     .then((response) => response.json())
     .then((response) => {
-      const favorites = JSON.parse(localStorage.getItem('favorites') as string)
-
-      favorites.forEach((pokemon: { id: number }) => {
-        if (pokemon.id === response.id) {
-          response.favorite = true
-        }
-      })
-
       return response
     })
     .catch((error) => {
