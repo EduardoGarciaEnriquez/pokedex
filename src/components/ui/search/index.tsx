@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {
-  fetchPokemonByName,
   fetchPokemons,
   fetchPokemonsList,
   setPage,
 } from '../../../store/slices/pokemonSlice'
 import { AppDispatch, IRootState } from '../../../store/store'
 import { HomeIcon, LoadingIcon, SearchIcon } from '../icons'
-import { Link } from 'react-router-dom'
 
 function Search() {
   const [value, setValue] = useState<string>('')
@@ -22,13 +21,8 @@ function Search() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-
-    if (value !== '') {
-      dispatch(fetchPokemonByName(value))
-      setValue('')
-    }
+  const handleSubmit = () => {
+    setValue('')
   }
 
   const goHome = () => {
@@ -70,13 +64,13 @@ function Search() {
             {loadingPokemonsList ? <LoadingIcon /> : <HomeIcon />}
           </Link>
         ) : (
-          <button
-            type="submit"
+          <Link
+            to={`/detail/${value}`}
             className="p-2.5 text-sm font-medium h-auto text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             onClick={handleSubmit}
           >
             {loadingPokemonsList ? <LoadingIcon /> : <SearchIcon />}
-          </button>
+          </Link>
         )}
       </div>
     </form>
