@@ -1,10 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import FavoriteButton from '../components/ui/favorite-btn'
-import { LoadingIcon } from '../components/ui/icons'
-import { fetchPokemonDetails, PokemonTypes } from '../store/slices/pokemonSlice'
-import { AppDispatch, IRootState } from '../store/store'
 import {
   BlueBadge,
   CyanBadge,
@@ -16,6 +12,10 @@ import {
   RedBadge,
   YellowBadge,
 } from '../components/ui/badges'
+import CardSkeleton from '../components/ui/card/loading'
+import FavoriteButton from '../components/ui/favorite-btn'
+import { fetchPokemonDetails, PokemonTypes } from '../store/slices/pokemonSlice'
+import { AppDispatch, IRootState } from '../store/store'
 
 function Detail() {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,7 +33,7 @@ function Detail() {
 
   return (
     <div className="pt-24 pb-10 w-full max-w-2xl mx-auto px-4 md:px-0">
-      {loadingPokemonDetails && <LoadingIcon />}
+      {loadingPokemonDetails && <CardSkeleton />}
       {!loadingPokemonDetails && pokemon && (
         <div className=" bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 grid gap-4 grid-cols-1 md:grid-cols-2 justify-items-center">
           <div className="relative w-full flex flex-col justify-center items-center">
