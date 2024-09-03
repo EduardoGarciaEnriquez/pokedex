@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
+  getEvolutionChain,
   getPokemonByName,
   getPokemonDetails,
   getPokemonsByPage,
@@ -64,10 +65,16 @@ export interface IPropsPokemon {
 export interface IPropsDetails extends IPropsPokemon {
   color: { name: string }
   evolution_chain: { url: string }
+  evolutions: IPropsDetails[]
   flavor_text_entries: { flavor_text: string }[]
   growth_rate: { name: string }
   habitat: { name: string }
   shape: { name: string }
+}
+
+export interface IPropsEvolutionChain {
+  species: { name: string }
+  evolves_to: IPropsEvolutionChain[]
 }
 
 interface IState {
@@ -79,6 +86,8 @@ interface IState {
   loadingPokemonsList: boolean
   pokemonTypes: []
   loadingPokemonTypes: boolean
+  pokemonDetails: IPropsDetails | null
+  loadingPokemonDetails: boolean
   favorites: string
   toastMsg: null | string
   isToastVisible: boolean
@@ -94,6 +103,8 @@ const initialState: IState = {
   loadingPokemonsList: false,
   pokemonTypes: [],
   loadingPokemonTypes: false,
+  pokemonDetails: null,
+  loadingPokemonDetails: false,
   favorites: localStorage.getItem('favorites') ?? '[]',
   toastMsg: null,
   isToastVisible: false,
@@ -107,6 +118,38 @@ export const fetchPokemonByName = createAsyncThunk(
     return pokemonDetail
   }
 )
+
+export const fetchPokemonDetails = createAsyncThunk(
+  'pokemon/fetchDetails',
+  async (name: string) => {
+    const evolutionArray: string[] = []
+    const response = await getPokemonByName(name)
+    const details = await getPokemonDetails(name)
+    const evolutions: IPropsEvolutionChain = await getEvolutionChain(
+      details.evolution_chain.url
+    )
+
+    recursionEvolutionChain(evolutions, evolutionArray)
+
+    const evolution_chain: IPropsPokemon[] = await Promise.all(
+      evolutionArray.map((evolution: string) => getPokemonByName(evolution))
+    )
+
+    return { ...response, ...details, evolutions: evolution_chain }
+  }
+)
+
+const recursionEvolutionChain = (
+  evolution: IPropsEvolutionChain,
+  array: string[]
+) => {
+  if (evolution.evolves_to.length !== 0) {
+    evolution.evolves_to.forEach((evolution_chain) => {
+      return recursionEvolutionChain(evolution_chain, array)
+    })
+  }
+  array.unshift(evolution.species.name)
+}
 
 export const fetchPokemons = createAsyncThunk(
   'pokemon/fetchPokemons',
@@ -280,6 +323,22 @@ export const pokemonSlice = createSlice({
       state.loadingPokemons = false
 
       state.pokemons = []
+      state.toastMsg = `Error: ${action.error.message}`
+      state.toastRole = Roles.error
+      state.isToastVisible = true
+    })
+
+    builder.addCase(fetchPokemonDetails.pending, (state) => {
+      state.loadingPokemonDetails = true
+    })
+    builder.addCase(fetchPokemonDetails.fulfilled, (state, action) => {
+      state.pokemonDetails = action.payload
+      state.loadingPokemonDetails = false
+    })
+    builder.addCase(fetchPokemonDetails.rejected, (state, action) => {
+      state.loadingPokemonDetails = false
+
+      state.pokemonDetails = null
       state.toastMsg = `Error: ${action.error.message}`
       state.toastRole = Roles.error
       state.isToastVisible = true

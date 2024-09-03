@@ -13,6 +13,7 @@ import Favorites from './pages/favorites'
 import Home from './pages/home'
 import { IRootState } from './store/store'
 import Types from './pages/types'
+import Detail from './pages/detail'
 
 function App() {
   const { isThemeDark } = useSelector((state: IRootState) => state.theme)
@@ -32,6 +33,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="/type/:type" element={<Types />} />
+          <Route path="/detail/:name" element={<Detail />} />
         </Route>
       </Routes>
     </Router>
