@@ -237,13 +237,14 @@ export const pokemonSlice = createSlice({
       state.isToastVisible = false
     },
     setFavorites: (state) => {
-      const favorites = JSON.parse(localStorage.getItem('favorites') as string)
-
-      favorites.forEach((item: IPropsPokemon) => {
-        item.favorite = true
-      })
+      state.loadingPokemons = true
+      const favorites = JSON.parse(state.favorites)
+      favorites.sort(
+        (prev: { id: number }, curr: { id: number }) => prev.id - curr.id
+      )
 
       state.pokemons = favorites
+      state.loadingPokemons = false
     },
   },
   extraReducers: (builder) => {
