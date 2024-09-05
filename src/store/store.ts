@@ -7,6 +7,10 @@ export const store = configureStore({
     theme: themeSlice,
     pokemon: pokemonSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export type IRootState = ReturnType<typeof store.getState>
