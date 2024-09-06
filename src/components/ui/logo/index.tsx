@@ -1,5 +1,5 @@
-import pokeballDark from '@assets/pokeball-dark.svg'
-import pokeball from '@assets/pokeball.svg'
+import pokeballDark from '../../../assets/pokeball-dark.svg'
+import pokeball from '../../../assets/pokeball.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, IRootState } from '../../../store/store'
 import { toggleDrawer } from '../../../store/slices/uiSlice'

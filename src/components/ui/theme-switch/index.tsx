@@ -1,5 +1,5 @@
-import moonIcon from '@assets/moon.svg'
-import sunIcon from '@assets/sun.svg'
+import moonIcon from '../../../assets/moon.svg'
+import sunIcon from '../../../assets/sun.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleTheme } from '../../../store/slices/uiSlice'
 import { IRootState } from '../../../store/store'
