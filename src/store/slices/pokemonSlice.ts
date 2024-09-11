@@ -94,7 +94,7 @@ interface IState {
   toastRole: Roles | null
 }
 
-const initialState: IState = {
+export const initialState: IState = {
   total: 0,
   pokemons: [],
   loadingPokemons: false,
