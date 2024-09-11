@@ -1,14 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../../store/redux-hooks'
 import {
   IPropsPokemon,
   toggleFavorite,
 } from '../../../store/slices/pokemonSlice'
 import { FavoriteIcon } from '../icons'
-import { IRootState } from '../../../store/store'
+import { AppDispatch, IRootState } from '../../../store/store'
 
 function FavoriteButton({ pokemon }: { pokemon: IPropsPokemon }) {
-  const dispatch = useDispatch()
-  const { favorites } = useSelector((state: IRootState) => state.pokemon)
+  const dispatch = useAppDispatch<AppDispatch>()
+  const { favorites } = useAppSelector((state: IRootState) => state.pokemon)
+
   const handleOnClick = () => {
     dispatch(toggleFavorite(pokemon))
   }

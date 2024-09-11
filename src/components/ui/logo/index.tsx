@@ -1,13 +1,13 @@
 import pokeballDark from '../../../assets/pokeball-dark.svg'
 import pokeball from '../../../assets/pokeball.svg'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../../store/redux-hooks'
 import { AppDispatch, IRootState } from '../../../store/store'
 import { toggleDrawer } from '../../../store/slices/uiSlice'
 
 function Logo() {
-  const { isThemeDark } = useSelector((state: IRootState) => state.theme)
+  const { isThemeDark } = useAppSelector((state: IRootState) => state.theme)
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useAppDispatch<AppDispatch>()
 
   const handleOnClick = () => {
     dispatch(toggleDrawer())
