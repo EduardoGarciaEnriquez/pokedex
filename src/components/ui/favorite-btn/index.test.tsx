@@ -45,7 +45,7 @@ describe('FavoriteButton', () => {
   it('renders component', () => {
     mountComponent()
 
-    expect(screen.getByText('favorite')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'favorite' })).toBeInTheDocument()
   })
 
   describe('when clicked', () => {
@@ -66,7 +66,9 @@ describe('FavoriteButton', () => {
       initialState = { favorites: JSON.stringify([props]) }
       mountComponent()
 
-      expect(screen.getByText('unfavorite')).toBeInTheDocument()
+      expect(
+        screen.getByRole('button', { name: 'unfavorite' })
+      ).toBeInTheDocument()
     })
   })
 })

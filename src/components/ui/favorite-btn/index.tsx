@@ -21,9 +21,9 @@ function FavoriteButton({ pokemon }: { pokemon: IPropsPokemon }) {
   })
 
   return (
-    <div className="cursor-pointer" onClick={handleOnClick}>
+    <button className="cursor-pointer" onClick={handleOnClick}>
       <FavoriteIcon status={favorite} />
-    </div>
+    </button>
   )
 }
 
