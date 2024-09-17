@@ -9,6 +9,7 @@ import Favorites from './pages/favorites'
 import Home from './pages/home'
 import Types from './pages/types'
 import { IRootState } from './store/store'
+import { hydrateRoot } from 'react-dom/client'
 
 function App() {
   const { isThemeDark } = useSelector((state: IRootState) => state.theme)
@@ -45,5 +46,9 @@ const Layout = () => {
     </div>
   )
 }
+
+const rootElement = document.getElementById('root')
+const root = hydrateRoot(rootElement!, <App />)
+root.render(<App />)
 
 export default App
