@@ -6,6 +6,7 @@ import './index.css'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 
 import { Provider } from 'react-redux'
+import { HelmetProvider } from 'react-helmet-async'
 
 const router = createHashRouter([
   {
@@ -17,7 +18,9 @@ const router = createHashRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
     </Provider>
   </StrictMode>
 )
