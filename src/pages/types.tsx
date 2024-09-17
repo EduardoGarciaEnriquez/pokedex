@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import Cards from '../components/cards'
 import { fetchPokemonsByType } from '../store/slices/pokemonSlice'
 import { AppDispatch } from '../store/store'
+import { MetaDecorator } from '../utils/meta-decorator'
 
 function Types() {
   const dispatch = useDispatch<AppDispatch>()
@@ -15,7 +16,12 @@ function Types() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type])
 
-  return <Cards />
+  return (
+    <>
+      <MetaDecorator title={`Pokedex | ${type} pokemons`} description={`All the ${type} pokemons.`} />
+      <Cards />
+    </>
+  )
 }
 
 export default Types

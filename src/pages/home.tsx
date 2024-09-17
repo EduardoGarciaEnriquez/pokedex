@@ -4,6 +4,7 @@ import Pagination from '../components/pagination'
 import { AppDispatch, IRootState } from '../store/store'
 import { useEffect } from 'react'
 import { fetchPokemons, setPage } from '../store/slices/pokemonSlice'
+import { MetaDecorator } from '../utils/meta-decorator'
 
 function Home() {
   const { page } = useSelector((state: IRootState) => state.pokemon)
@@ -23,6 +24,10 @@ function Home() {
 
   return (
     <>
+      <MetaDecorator
+        title="Pokedex | Home"
+        description="Record of Pokémon that a trainer has seen or caught, and a source of information about Pokémon species and their evolutions"
+      />
       <Cards />
       <Pagination />
     </>
