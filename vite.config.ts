@@ -11,7 +11,7 @@ export default defineConfig({
     setupFiles: './src/setupTests.ts',
     css: true,
   },
-  base: '/',
+  base: 'https://eduardogarciaenriquez.github.io/pokedex/',
   server: {
     host: true,
     port: 3000,

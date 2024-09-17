@@ -1,19 +1,14 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import {
-  Outlet,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from 'react-router-dom'
+import { Outlet, Route, Routes } from 'react-router-dom'
 import Drawer from './components/drawer'
 import Header from './components/header'
 import Toast from './components/toast'
+import Detail from './pages/detail'
 import Favorites from './pages/favorites'
 import Home from './pages/home'
-import { IRootState } from './store/store'
 import Types from './pages/types'
-import Detail from './pages/detail'
+import { IRootState } from './store/store'
 
 function App() {
   const { isThemeDark } = useSelector((state: IRootState) => state.theme)
@@ -27,7 +22,7 @@ function App() {
   }, [isThemeDark])
 
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -36,7 +31,7 @@ function App() {
           <Route path="/detail/:name" element={<Detail />} />
         </Route>
       </Routes>
-    </Router>
+    </>
   )
 }
 
