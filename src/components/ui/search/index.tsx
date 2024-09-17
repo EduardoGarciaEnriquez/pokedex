@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
   fetchPokemons,
   fetchPokemonsList,
   setPage,
 } from '../../../store/slices/pokemonSlice'
+
+import { useAppDispatch, useAppSelector } from '../../../store/redux-hooks'
 import { AppDispatch, IRootState } from '../../../store/store'
+
 import { HomeIcon, LoadingIcon, SearchIcon } from '../icons'
 
 function Search() {
   const [value, setValue] = useState<string>('')
-  const dispatch = useDispatch<AppDispatch>()
-  const { pokemonsList, loadingPokemonsList } = useSelector(
+  const dispatch = useAppDispatch<AppDispatch>()
+  const { pokemonsList, loadingPokemonsList } = useAppSelector(
     (state: IRootState) => state.pokemon
   )
 
@@ -35,9 +37,10 @@ function Search() {
   }
 
   return (
-    <form className="max-w-md w-full">
+    <form className="max-w-md w-full" name="searchForm">
       <div className="w-full flex items-middle">
         <select
+          name="pokelist"
           onChange={handleOnChange}
           className="p-2.5 w-[90%] z-20 text-sm text-gray-600 bg-gray-50  rounded-s-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500 bg-transparent transition-all duration-1000 ease-in-out"
           required
