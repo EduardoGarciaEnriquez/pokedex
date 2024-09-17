@@ -1,50 +1,72 @@
-# React + TypeScript + Vite
+# Weather Forecast App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Pokédex is an electronic device in the Pokémon world that serves as an encyclopedia for Pokémon species. It provides information about different Pokémon, including their types, abilities, and habitats. Each Pokémon is assigned a unique identification number, and the database is organized in a systematic order.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Get pokemons info**: Get Pokemon info and details such as its type, weight, heigh, etc.
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The project is built using **Vite**, **React**, and **TypeScript**, and includes several key features:
 
-- Configure the top-level `parserOptions` property like this:
+- **Testing**: Implemented using **Vitest** and **React Testing Library**.
+- **Environment Variables**: Manage sensitive data with environment variables.
+- **Linting**: Ensured code quality with **ESLint**.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Directory Structure
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- public/
+- src/
+  - assets/
+  - components/
+    - ComponentName/
+      - index.tsx
+      - index.test.tsx
+      - style.css
+  - utils/
+        hooks/
+        - useHookName.ts
+        - useHookName.test.ts
+    utils-file.ts
+  - styles/
+- cypress/e2e/\*.cy.ts
+- config files (ts, vite, eslint, jest)
+- .gitignore
+- index.html
+- package.json
+- github/workflows/deploy.yml
+- .env
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Installation
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-repo/weather-forecast-app.git
+   cd weather-forecast-app
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+## Scripts
+
+- **Start the development server**: `npm run dev`
+- **Build the project**: `npm run build`
+- **Lint the code**: `npm run lint`
+- **Preview the built project**: `npm run preview`
+- **Run tests**: `npm run test`
+- **Run tests with coverage**: `npm run test:ci`
+- **Run end to end tests GUI mode**: `npm run cy:e2e`
+
+## Configuration
+
+The ESLint configuration is set up to include React-specific rules and TypeScript support. You can customize the ESLint settings in `eslint.config.js` according to your needs.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
