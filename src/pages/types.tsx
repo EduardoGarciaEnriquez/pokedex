@@ -18,7 +18,11 @@ function Types() {
 
   return (
     <>
-      <MetaDecorator title={`Pokedex | ${type} pokemons`} description={`All the ${type} pokemons.`} />
+      <MetaDecorator
+        title={`Pokedex | ${type} pokemons`}
+        description={`All the ${type} pokemons.`}
+        link={`#/type/${type}`}
+      />
       <Cards />
     </>
   )

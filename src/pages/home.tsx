@@ -26,8 +26,7 @@ function Home() {
     <>
       <MetaDecorator
         title="Pokedex | Home"
-        description="Record of Pokémon that a trainer has seen or caught, and a source of information about Pokémon species and their evolutions"
-      />
+        description="Record of Pokémon that a trainer has seen or caught, and a source of information about Pokémon species and their evolutions" link={''}      />
       <Cards />
       <Pagination />
     </>

@@ -38,7 +38,8 @@ function Detail() {
       <MetaDecorator
         title={`Pokedex | ${name}`}
         description={`Detail page about: ${name}`}
-        img={pokemon?.sprites?.front_default ?? undefined}
+        imageCard={pokemon?.sprites?.front_default ?? undefined}
+        link={`#/detail/${name}`}
       />
       <div className="pt-24 pb-10 w-full max-w-2xl mx-auto px-4 md:px-0">
         {loadingPokemonDetails && <CardSkeleton />}

@@ -19,6 +19,7 @@ function Favorites() {
       <MetaDecorator
         title="Pokedex | Your favorite pokemons"
         description="All your favorite pokemons from all types and generations."
+        link="#/favorites"
       />
       <Cards />
     </>

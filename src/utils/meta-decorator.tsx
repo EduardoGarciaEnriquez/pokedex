@@ -1,69 +1,103 @@
 import { Helmet } from 'react-helmet-async'
 
-import logo from '../assets/pokeball.svg'
+const DOMAIN = 'https://eduardogarciaenriquez.github.io/pokedex/'
+const MAIN_KEYWORDS = 'pokedex, pokemon'
+
+const DEFAULT_IMAGE_CARD =
+  'https://eduardogarciaenriquez.github.io/pokedex/image-card'
+const DEFAULT_TITLE = 'Pokedex | Home'
+const DEFAULT_DESCRIPTION =
+  'Record of Pokémon that a trainer has seen or caught, and a source of information about Pokémon species and their evolutions'
+
+const FAVICON_SOURCE =
+  'https://eduardogarciaenriquez.github.io/pokedex/pokeball.svg'
+
+const POSTFIX_TITLE = ' - Pokedex'
+
+type PropTypes = {
+  title?: string
+  description?: string
+  link: string
+  keywords?: string
+  imageCard?: string
+  largeTwitterCard?: boolean
+  addPostfixTitle?: boolean
+  noIndex?: boolean
+}
 
 const MetaDecorator = ({
-  title,
-  description,
-  img = logo,
-}: {
-  title: string
-  description: string
-  img?: string
-}) => {
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  link,
+  keywords = '',
+  imageCard = DEFAULT_IMAGE_CARD,
+  largeTwitterCard = false,
+  addPostfixTitle = false,
+  noIndex = false,
+}: PropTypes) => {
+  let metaTitle: string
+
+  if (addPostfixTitle) {
+    metaTitle = title + POSTFIX_TITLE
+  } else {
+    metaTitle = title
+  }
+
+  const metaDesc = description ?? DEFAULT_DESCRIPTION
+  const metaLink = DOMAIN + link
+
+  const metaKeywords = keywords.length
+    ? MAIN_KEYWORDS + ', ' + keywords
+    : MAIN_KEYWORDS
+
+  let metaImageCard: string
+
+  if (imageCard) {
+    if (imageCard.startsWith('https')) {
+      metaImageCard = imageCard
+    } else {
+      metaImageCard = DOMAIN + imageCard
+    }
+  } else {
+    metaImageCard = DEFAULT_IMAGE_CARD
+  }
+
+  const metaRobots = noIndex ? 'noindex, nofollow' : 'index, follow'
+
+  const twitterCardType = largeTwitterCard ? 'summary_large_image' : 'summary'
+
   return (
     <Helmet>
-      {/* <!-- Primary Meta Tags --> */}
-      <title>{title}</title>
-      <meta name="title" content={title} />
-      <meta name="description" content={description} />
+      <html lang="en" />
+      <title>{metaTitle}</title>
+      <meta name="description" content={metaDesc} />
+      <link rel="canonical" href={metaLink} />
+      <meta name="keywords" content={metaKeywords} />
+      <meta name="robots" content={metaRobots} />
+      <link rel="icon" href={FAVICON_SOURCE} />
 
-      {/* <!-- Open Graph / Facebook --> */}
-      <meta property="og:type" content="website" />
-      <meta
-        property="og:url"
-        content={
-          window.location.protocol +
-          '//' +
-          window.location.hostname +
-          window.location.pathname +
-          window.location.search
-        }
-      />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta
-        property="og:image"
-        content={
-          window.location.protocol + '//' + window.location.hostname + img
-        }
-      />
+      {/* OG Tags */}
+      {/* https://ogp.me/ */}
+      <meta property="og:url" title={metaLink} />
+      <meta property="og:title" title={metaTitle} />
+      <meta property="og:description" title={metaDesc} />
+      <meta property="og:type" content="..." />
+      <meta property="og:image" content={metaImageCard} />
 
-      {/* <!-- Twitter --> */}
-      <meta property="twitter:card" content="summary_large_image" />
+      {/* Twitter tags */}
+      {/* https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started */}
+      <meta property="twitter:site" title="twitter username of website" />
+      <meta property="twitter:title" title={metaTitle} />
+      <meta property="twitter:description" title={metaDesc} />
       <meta
-        property="twitter:url"
-        content={
-          window.location.protocol +
-          '//' +
-          window.location.hostname +
-          window.location.pathname +
-          window.location.search
-        }
+        property="twitter:creator"
+        content="twitter username of webpage content"
       />
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta
-        property="twitter:image"
-        content={
-          window.location.protocol + '//' + window.location.hostname + img
-        }
-      />
+      <meta property="twitter:card" content={twitterCardType} />
+      <meta property="twitter:image" content={metaImageCard} />
 
-      <meta name="twitter:image:alt" content="img-alt" />
-      <meta property="og:site_name" content="European Travel, Inc." />
-      <meta property="fb:app_id" content="your_app_id" />
-      <meta name="twitter:site" content="@website-username" />
+      {/* https://moz.com/blog/meta-referrer-tag */}
+      <meta name="referrer" content="origin-when-crossorigin" />
     </Helmet>
   )
 }
